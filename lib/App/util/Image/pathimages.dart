@@ -1,0 +1,40 @@
+class Images {
+  static const String logo = 'assets/images/logo.png';
+  static const String arabic = 'assets/image/arabic.png';
+  static const String english = 'assets/image/english.png';
+  static const String call = 'assets/image/call.png';
+  static const String mail = 'assets/image/mail.png';
+  static const String placeholder = 'assets/image/placeholder.jpg';
+  static const String notificationPlaceholder =
+      'assets/image/notification_placeholder.jpg';
+  static const String logOut = 'assets/image/log_out.png';
+  static const String profileBg = 'assets/image/profile_bg.png';
+  static const String warning = 'assets/image/warning.png';
+  static const String lock = 'assets/image/lock.png';
+  static const String support = 'assets/image/support.png';
+  static const String campaign = 'assets/image/campaign.png';
+  static const String dollar = 'assets/image/dollar.png';
+  static const String language = 'assets/image/language.png';
+  static const String order = 'assets/image/order.png';
+  static const String transaction = 'assets/image/transaction.png';
+  static const String wallet = 'assets/image/wallet.png';
+  static const String money = 'assets/image/money.png';
+  static const String bank = 'assets/image/bank.png';
+  static const String bankInfo = 'assets/image/bank_info.png';
+  static const String branch = 'assets/image/branch.png';
+  static const String user = 'assets/image/user.png';
+  static const String addon = 'assets/image/addon.png';
+  static const String edit = 'assets/image/edit.png';
+  static const String notificationIn = 'assets/image/notification_in.png';
+  static const String pos = 'assets/image/pos.png';
+  static const String policy = 'assets/image/policy.png';
+  static const String terms = 'assets/image/terms.png';
+  static const String update = 'assets/image/update.png';
+  static const String maintenance = 'assets/image/maintenance.png';
+  static const String image = 'assets/image/image.png';
+  static const String send = 'assets/image/send.png';
+  static const String couponVertical = 'assets/image/cupon.png';
+  static const String couponDetails = 'assets/image/coupon_details.png';
+  static const String coupon = 'assets/image/coupon.png';
+  static const String expense = 'assets/image/expense.png';
+}
