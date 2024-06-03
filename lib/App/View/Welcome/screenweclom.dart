@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:tomlogin/App/View/Auth/Sign%20in/screensignin.dart';
+import 'package:tomlogin/App/View/Welcome/screenstarte.dart';
 import 'package:tomlogin/App/util/Route/go.dart';
 
 import '../../util/Image/pathimages.dart';
@@ -23,8 +24,8 @@ class _ScreenWelcomeState extends State<ScreenWelcome> {
   }
 
   instail() {
-    Timer(const Duration(seconds: 3), () {
-      Go.to(context, const ScreenSignin());
+    Timer(const Duration(seconds: 4), () {
+      Go.to(context, TestScreen());
     });
   }
 
@@ -43,7 +44,10 @@ class _ScreenWelcomeState extends State<ScreenWelcome> {
       body: Stack(
         children: [
           Center(
-            child: Image.asset(Images.logo),
+            child: Image.asset(
+              Images.logo,
+              height: 200,
+            ),
           ),
           if (iscomplet == true)
             Positioned(

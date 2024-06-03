@@ -1,73 +1,41 @@
-// import 'dart:async';
-// import 'dart:developer' as developer;
+import 'package:day_night_time_picker/lib/state/time.dart';
+import 'package:flutter/foundation.dart';
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
+class TimeProvider extends ChangeNotifier {
+  bool _switchValue2 = false;
+  bool _switchValue3 = false;
+  bool _switchValue1 = false;
 
+  bool get switchValue1 => _switchValue1;
+  bool get switchValue2 => _switchValue2;
+  bool get switchValue3 => _switchValue3;
 
-// class MyAppController extends ChangeNotifier {
+  set switchValue1(bool value) {
+    _switchValue1 = value;
+    notifyListeners();
+  }
 
+  set switchValue2(bool value) {
+    _switchValue2 = value;
+    notifyListeners();
+  }
 
-//   Future<void> initConnectivity() async {
-//     late ConnectivityResult result;
-//     try {
-//       result = await connectivity.checkConnectivity();
-//     } on PlatformException catch (e) {
-//       developer.log('Couldn\'t check connectivity status', error: e);
-//       return;
-//     }
-//     // if (!mounted) {
-//     //   return Future.value(null);
-//     // }
-//     return updateConnectionStatus(result);
-//   }
+  set switchValue3(bool value) {
+    _switchValue3 = value;
+    notifyListeners();
+  }
 
-//   Future<void> updateConnectionStatus(ConnectivityResult result) async {
-//     connectionStatus = result;
-//     notifyListeners();
-//   }
+  Time _time = Time(hour: 11, minute: 30, second: 20);
 
-//   int pingtime = 999;
-//   getping() {
-//     PingApp.ping.stream.listen((event) {
-//       try {
-//         if (event.response!.time!.inMilliseconds > 999) {
-//           pingtime = 999;
-//           notifyListeners();
-//         } else {
-//           pingtime = event.response!.time!.inMilliseconds;
-//           notifyListeners();
-//         }
-//       } catch (e) {
-//         pingtime = 999;
-//         notifyListeners();
-//       }
-//     });
-//   }
+  Time get time => _time;
 
-//   UserData? userdata;
-//   String iscreate = 'iscreate';
-//   @override
-//   void dispose() {
-//     connectivitySubscription.cancel();
-//     super.dispose();
-//   }
+  set time(Time newTime) {
+    _time = newTime;
+    notifyListeners();
+  }
 
-//   void updateData(UserData newData) {
-//     userdata = newData;
-//     notifyListeners();
-//   }
-
-//   ins() {
-//     if (userid.read('iduser') == null) {
-//     } else {
-//       ApiOperation.getuserData(
-//         int.parse(userid.read('iduser')),
-//       ).then((UserData value) {
-//         if (value.status == true) {
-//           updateData(value);
-//         } else {}
-//       });
-//     }
-//   }
-// }
+  void updateTime(Time newTime) {
+    _time = newTime;
+    notifyListeners();
+  }
+}

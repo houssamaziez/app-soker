@@ -1,7 +1,7 @@
 class TextApp {
   static const String helloAgain = "Hello Again!";
   static const String helloAgainsup =
-      """Fill your details or continue with social media""";
+      """Fill your details or continue with Med Cup""";
   static const String registerAccount = "Register Account";
   static const String emailAddress = "Email Address";
   static const String password = "Password";

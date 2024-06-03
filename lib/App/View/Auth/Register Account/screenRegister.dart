@@ -5,6 +5,7 @@ import 'package:tomlogin/App/View/Auth/Sign%20in/screensignin.dart';
 import '../../../Controller/api_operations.dart';
 import '../../../Controller/locationController.dart';
 import '../../../util/Const/text_app.dart';
+import '../../../util/QRscane/screenbeforscane.dart';
 import '../../../util/Route/go.dart';
 import '../../../util/Size/dimensions.dart';
 import '../../../util/theme/Style/styles.dart';
@@ -130,7 +131,9 @@ class _ScreenRegisterState extends State<ScreenRegister> {
                                       ? TextApp.registerAccount
                                       : TextApp.loading,
                                   color: Theme.of(context).primaryColor,
-                                  functinn: () {});
+                                  functinn: () {
+                                Go.to(context, ScreenBSC());
+                              });
                             }),
                             SizeApp.sizedboxh25,
                           ],

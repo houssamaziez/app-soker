@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tomlogin/App/util/theme/light_theme.dart';
 
 import 'View/Welcome/screenweclom.dart';
+import 'View/Widgets/BottomBar/bottombar_profile.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

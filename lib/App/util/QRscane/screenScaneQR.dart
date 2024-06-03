@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:tomlogin/App/View/Home/ScreenHome.dart';
+import 'package:tomlogin/App/View/Home/screenListTime.dart';
 import 'package:tomlogin/App/View/Widgets/dialoganimtion.dart';
+import 'package:tomlogin/App/util/Route/go.dart';
+
+import '../../View/Widgets/BottomBar/bottombar_profile.dart';
 
 class QRViewExample extends StatefulWidget {
   @override
@@ -44,10 +50,17 @@ class _QRViewExampleState extends State<QRViewExample>
     return Scaffold(
       appBar: AppBar(
         title: Text('Scane QR to connect'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Go.to(
+                  context,
+                  HomeBOTTONBAR(),
+                );
+              },
+              child: Text("skip"))
+        ],
         centerTitle: true,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => showAnimatedDialog(context),
       ),
       body: Stack(
         children: <Widget>[
@@ -67,7 +80,7 @@ class _QRViewExampleState extends State<QRViewExample>
             builder: (context, child) {
               return Positioned(
                 top: MediaQuery.of(context).size.height / 2 -
-                    150 +
+                    204 +
                     (300 * animationController!.value),
                 left: MediaQuery.of(context).size.width / 2 - 146,
                 child: Container(
@@ -81,10 +94,12 @@ class _QRViewExampleState extends State<QRViewExample>
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
+              width: double.infinity,
               padding: EdgeInsets.all(20),
               color: qrText != null ? Colors.green : Colors.white,
               child: Text(
                 qrText != null ? 'Result: $qrText' : 'Scan a code',
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18),
               ),
             ),
@@ -97,6 +112,10 @@ class _QRViewExampleState extends State<QRViewExample>
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
+      Go.to(
+        context,
+        HomeBOTTONBAR(),
+      );
       showAnimatedDialog(context);
     });
   }
