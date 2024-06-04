@@ -21,6 +21,9 @@ class _ScreenBoxState extends State<ScreenBox> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 1,
+        title: Text('Layers'),
+        centerTitle: true,
         leading: Container(),
       ),
       body: Column(
@@ -30,9 +33,10 @@ class _ScreenBoxState extends State<ScreenBox> {
               Go.to(context, ScreenListTime());
             },
             child: boxwidget(
+                color: Color.fromARGB(255, 194, 220, 240),
                 box: Box(
-                    title: 'title',
-                    details: 'details',
+                    title: 'Layer 1',
+                    details: 'Room No. 1 is for daily medications',
                     time: Time(hour: 2, second: 2, minute: 3)),
                 isselct: box1,
                 onChanged: (bul) {
@@ -46,24 +50,34 @@ class _ScreenBoxState extends State<ScreenBox> {
               Go.to(context, ScreenListTime());
             },
             child: boxwidget(
+                color: Color.fromARGB(255, 192, 247, 211),
                 box: Box(
-                    title: 'title',
-                    details: 'details',
+                    title: 'Layer 2',
+                    details: 'Room No. 2 is for daily medications',
                     time: Time(hour: 2, second: 2, minute: 3)),
-                isselct: true,
-                onChanged: (bul) {}),
+                isselct: box2,
+                onChanged: (bul) {
+                  setState(() {
+                    box2 = bul;
+                  });
+                }),
           ),
           InkWell(
             onTap: () {
               Go.to(context, ScreenListTime());
             },
             child: boxwidget(
+                color: Color.fromARGB(255, 247, 243, 180),
                 box: Box(
-                    title: 'title',
-                    details: 'details',
+                    title: 'Layer 3',
+                    details: 'Room No. 3 is for daily medications',
                     time: Time(hour: 2, second: 2, minute: 3)),
-                isselct: true,
-                onChanged: (bul) {}),
+                isselct: box3,
+                onChanged: (bul) {
+                  setState(() {
+                    box3 = bul;
+                  });
+                }),
           ),
         ],
       ),
@@ -73,10 +87,12 @@ class _ScreenBoxState extends State<ScreenBox> {
   Padding boxwidget(
       {required Box box,
       required bool isselct,
+      required Color color,
       required Function(bool)? onChanged}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
+        color: color,
         child: Column(
           children: [
             SizedBox(
@@ -88,7 +104,10 @@ class _ScreenBoxState extends State<ScreenBox> {
                     SizedBox(width: 10),
                   ],
                 ),
-                leading: Icon(Icons.timer),
+                leading: Icon(
+                  Icons.layers,
+                  color: Theme.of(context).primaryColor,
+                ),
                 subtitle: Text(box.details),
                 trailing: Switch(value: isselct, onChanged: onChanged),
               ),

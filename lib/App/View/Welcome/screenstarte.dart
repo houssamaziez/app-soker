@@ -8,23 +8,28 @@ class TestScreen extends StatelessWidget {
     final List<Introduction> list = [
       Introduction(
         title: ' ',
-        subTitle: '''MED CUP  مرحبا بكم في تطبيق 
+        subTitle: '''مرحبا بكم في تطبيق MED CUP
 
-التطبيق الاول من نوعه في الجزائر ، تطبيق سهل و سلس لمساعدتك في حياتك الصحية''',
+التطبيق الاول من نوعه في الجزائر ، تطبيق سهل و سلس لمساعدتك في
+إدارة دوائك بكل سهولة وأمان''',
         imageUrl: 'assets/images/logo-removebg-preview.png',
         imageHeight: MediaQuery.of(context).size.height * 0.3,
       ),
       Introduction(
-        title: 'MED CUP',
+        title: 'Med Cup مع',
+        subTitleTextStyle: TextStyle(fontSize: 18),
         subTitle:
-            'هي عبارة عن علبة ستقوم بتسهيل حالتك المرضية و مساعدتك على العلاج في اقرب وقت حيث تحتوي على نظام تذكير تناول للأدوية و ميزة خاصة تساعدك على أخذ جرعاتك من الأنسولين و كل هاذا بنظام سهل و حماية تامة',
+            ''' علبة ذكية ترافقك في رحلة علاجك من خلال تحكم كامل في إدارة أدويتك وتعيين جداول زمنية وإبقائك على المسار الصحيح بإرسال تنبيهات وتتبع التزامك بالأدوية بالإضافة إلى ميزة خاصة تساعدك على أخذ جرعاتك من الأنسولين وكل هذا بنظام سهل و آمن''',
         imageUrl:
             'assets/images/Messenger_creation_9821d3b1-4fad-4ff6-b91c-a3d87ce3ce04-removebg-preview.png',
         imageHeight: MediaQuery.of(context).size.height * 0.27,
       ),
       Introduction(
         title: 'تجربة علاج',
-        subTitle: 'إستمتع بتجربة فريدة وسهل',
+        subTitle: '''Med Cup مع
+لن تفوت جرعة أخرى من دوائك
+مع تجربة إدارة دوائك أسهل
+وأفضل''',
         imageUrl:
             'assets/images/Messenger_creation_22635593-5bd5-4690-ae29-11f3683cfdf5-removebg-preview.png',
         imageHeight: MediaQuery.of(context).size.height * 0.3,
@@ -32,7 +37,6 @@ class TestScreen extends StatelessWidget {
     ];
 
     return IntroScreenOnboarding(
-      backgroudColor: Colors.teal,
       introductionList: list,
       onTapSkipButton: () {
         // start.write("start", true);

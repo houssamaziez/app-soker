@@ -4,7 +4,7 @@ import 'package:tomlogin/App/Model/user.dart';
 
 import '../../Home/Box/screenbox.dart';
 import '../../Home/State/stateScreen.dart';
-import '../../Home/profileScreen.dart';
+import '../../Home/Profile/profileScreen.dart';
 import '../../Home/screenListTime.dart';
 import '../../Home/هnsulinConfirmationScreen.dart';
 

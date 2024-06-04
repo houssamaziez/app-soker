@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Go {
-  static void to(context, Widget SecondScreen) {
-    Navigator.push(
+  static to(context, Widget SecondScreen) {
+    return Navigator.push(
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => SecondScreen,

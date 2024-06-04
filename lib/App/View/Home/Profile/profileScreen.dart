@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tomlogin/App/View/Home/screenEdite.dart';
 import 'package:tomlogin/App/View/Home/settingScreen.dart';
-import '../../Model/user.dart';
-import '../../util/Route/go.dart';
+import '../../../Model/user.dart';
+import '../../../util/Route/go.dart';
 
 class UserProfileScreen extends StatelessWidget {
   final UserData userData;

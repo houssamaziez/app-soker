@@ -41,6 +41,7 @@ class _QRViewExampleState extends State<QRViewExample>
   @override
   void dispose() {
     controller?.dispose();
+    controller!.stopCamera();
     animationController?.dispose();
     super.dispose();
   }
@@ -53,8 +54,10 @@ class _QRViewExampleState extends State<QRViewExample>
         actions: [
           TextButton(
               onPressed: () {
-                Go.to(
-                  context,
+                controller?.dispose();
+                controller!.stopCamera();
+                animationController?.dispose();
+                Go.push(
                   HomeBOTTONBAR(),
                 );
               },

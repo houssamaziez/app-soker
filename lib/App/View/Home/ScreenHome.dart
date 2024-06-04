@@ -23,45 +23,43 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  timeconfig(_time),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.displayLarge,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                timeconfig(_time),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+              const SizedBox(height: 10),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
                 ),
-                const SizedBox(height: 10),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      showPicker(
-                        showSecondSelector: true,
-                        context: context,
-                        value: _time,
-                        onChange: onTimeChanged,
-                        minuteInterval: TimePickerInterval.FIVE,
-                        // Optional onChange to receive value as DateTime
-                        onChangeDateTime: (DateTime dateTime) {
-                          // print(dateTime);
-                          debugPrint("[debug datetime]:  $dateTime");
-                        },
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    "Open time picker",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    showPicker(
+                      showSecondSelector: true,
+                      context: context,
+                      value: _time,
+                      onChange: onTimeChanged,
+                      minuteInterval: TimePickerInterval.FIVE,
+                      // Optional onChange to receive value as DateTime
+                      onChangeDateTime: (DateTime dateTime) {
+                        // print(dateTime);
+                        debugPrint("[debug datetime]:  $dateTime");
+                      },
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Open time picker",
+                  style: TextStyle(color: Colors.white),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -10,6 +10,7 @@ class ScreenState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 1,
         centerTitle: true,
         title: Text('statistics'),
       ),

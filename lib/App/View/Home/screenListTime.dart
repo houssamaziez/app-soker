@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:day_night_time_picker/lib/constants.dart';
 import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
+import 'package:tomlogin/App/View/Home/Box/addtime.dart';
+import 'package:tomlogin/App/util/Route/go.dart';
 import 'package:tomlogin/App/util/Time/temtext.dart';
 
 import '../../Controller/myappcontroller.dart';
@@ -52,8 +54,19 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        elevation: 1,
         title: Text("All Time"),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: IconButton(
+                  onPressed: () {
+                    var c = Go.to(context, AddItemScreen());
+                    setState(() {});
+                  },
+                  icon: Icon(Icons.add)))
+        ],
       ),
       body: ListView.builder(
         itemCount: listbox.length,
@@ -67,8 +80,6 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
             child: Container(
               child: boxwidget(
                 box: listbox[index],
-                isselct: listchnae[index].isselct,
-                onChanged: listchnae[index].onChanged,
               ),
             ),
           );
@@ -82,50 +93,38 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
     var timeProvider = Provider.of<TimeProvider>(context, listen: false);
 
     return showModalBottomSheet(
+      isScrollControlled: true,
+      scrollControlDisabledMaxHeightRatio: 300,
       context: context,
       builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              color: Colors.white,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    boxwidgetedite(
-                      box: box,
-                      index: index,
-                      isselct: chnae.isselct,
-                      onChanged: (newValue) {
-                        setState(() {
-                          chnae.onChanged!(newValue);
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
+        return Container(
+          child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return boxwidgetedite(
+                box: box,
+                index: index,
+                isselct: chnae.isselct,
+                onChanged: (newValue) {
+                  setState(() {
+                    chnae.onChanged!(newValue);
+                  });
+                },
+              );
+            },
+          ),
         );
       },
     );
   }
 
-  Padding boxwidget(
-      {required Box box,
-      required bool isselct,
-      required Function(bool)? onChanged}) {
+  Padding boxwidget({
+    required Box box,
+  }) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
         child: Column(
           children: [
-            Text(
-              timeconfig(box.time),
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ),
             SizedBox(
               height: 100,
               child: ListTile(
@@ -137,7 +136,11 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
                 ),
                 leading: Icon(Icons.timer),
                 subtitle: Text(box.details),
-                trailing: Switch(value: isselct, onChanged: onChanged),
+                trailing: Text(
+                  timeconfig(box.time),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                ),
+                // trailing: Switch(value: isselct, onChanged: onChanged),
               ),
             ),
           ],
@@ -163,7 +166,7 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
     }
   }
 
-  Padding boxwidgetedite({
+  boxwidgetedite({
     required Box box,
     required bool isselct,
     required int index,
@@ -173,93 +176,100 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
     var detailsController = TextEditingController(text: box.details);
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Consumer<TimeProvider>(
-        builder: (context, timeProvider, _) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    showPicker(
-                      showSecondSelector: true,
-                      context: context,
-                      value: timeProvider.time,
-                      onChange: (newTime) {
-                        timeProvider.updateTime(newTime);
-                      },
-                      minuteInterval: TimePickerInterval.FIVE,
-                      onChangeDateTime: (dateTime) {
-                        debugPrint("[debug datetime]: $dateTime");
+      padding: const EdgeInsets.only(top: 30),
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 1,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Consumer<TimeProvider>(
+            builder: (context, timeProvider, _) {
+              return Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        showPicker(
+                          showSecondSelector: true,
+                          context: context,
+                          value: timeProvider.time,
+                          onChange: (newTime) {
+                            timeProvider.updateTime(newTime);
+                          },
+                          minuteInterval: TimePickerInterval.FIVE,
+                          onChangeDateTime: (dateTime) {
+                            debugPrint("[debug datetime]: $dateTime");
+                          },
+                        ),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          timeconfig(timeProvider.time),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                        Icon(Icons.edit),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      controller: titleController,
+                      decoration: InputDecoration(
+                        labelText: 'Title',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (newValue) {
+                        // Update title in box
+                        // box.title = newValue;
                       },
                     ),
-                  );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      timeconfig(timeProvider.time),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
+                  ),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      controller: detailsController,
+                      decoration: InputDecoration(
+                        labelText: 'Details',
+                        border: OutlineInputBorder(),
                       ),
+                      onChanged: (newValue) {
+                        // Update details in box
+                        // box.details = newValue;
+                      },
                     ),
-                    Icon(Icons.edit),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TextFormField(
-                  controller: titleController,
-                  decoration: InputDecoration(
-                    labelText: 'Title',
-                    border: OutlineInputBorder(),
                   ),
-                  onChanged: (newValue) {
-                    // Update title in box
-                    // box.title = newValue;
-                  },
-                ),
-              ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TextFormField(
-                  controller: detailsController,
-                  decoration: InputDecoration(
-                    labelText: 'Details',
-                    border: OutlineInputBorder(),
+                  SizedBox(height: 20),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        updateSecondBox(
+                          Box(
+                            title: titleController.text,
+                            details: detailsController.text,
+                            time: timeProvider.time,
+                          ),
+                          index,
+                        );
+                        Navigator.of(context).pop(); // Close the bottom sheet
+                      },
+                      child: Text('Save'),
+                    ),
                   ),
-                  onChanged: (newValue) {
-                    // Update details in box
-                    // box.details = newValue;
-                  },
-                ),
-              ),
-              SizedBox(height: 20),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    updateSecondBox(
-                      Box(
-                        title: titleController.text,
-                        details: detailsController.text,
-                        time: timeProvider.time,
-                      ),
-                      index,
-                    );
-                    Navigator.of(context).pop(); // Close the bottom sheet
-                  },
-                  child: Text('Save'),
-                ),
-              ),
-            ],
-          );
-        },
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }
