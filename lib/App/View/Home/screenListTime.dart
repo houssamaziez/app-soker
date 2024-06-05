@@ -8,78 +8,97 @@ import 'package:tomlogin/App/util/Time/temtext.dart';
 
 import '../../Controller/myappcontroller.dart';
 import '../../Model/box.dart';
+import 'ScreenTime/widgets.dart';
 
 class ScreenListTime extends StatelessWidget {
-  const ScreenListTime({Key? key}) : super(key: key);
+  const ScreenListTime({super.key, required this.id});
+  final int id;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => TimeProvider(),
-      child: _ScreenListTimeStateful(),
+      child: _ScreenListTimeStateful(
+        id: id,
+      ),
     );
   }
 }
 
 class _ScreenListTimeStateful extends StatefulWidget {
+  final int id;
+
+  const _ScreenListTimeStateful({super.key, required this.id});
   @override
-  State<_ScreenListTimeStateful> createState() => _ScreenListTimeState();
+  State<_ScreenListTimeStateful> createState() => _ScreenListTimeState(id: id);
 }
 
 class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController detailsController = TextEditingController();
+  final int id;
+
+  _ScreenListTimeState({required this.id});
+  void _saveItem(BuildContext context) {
+    final timeProvider = Provider.of<TimeProvider>(context, listen: false);
+    final newItem = Box(
+      title: titleController.text,
+      details: detailsController.text,
+      time: timeProvider.time,
+    );
+    if (listbox1 == 1) {
+      listbox1.add(newItem);
+    } else {
+      if (listbox1 == 2) {
+        listbox2.add(newItem);
+      } else {
+        listbox3.add(newItem);
+      }
+    }
+
+    setState(() {});
+    Navigator.of(context).pop(); // Close the screen
+  }
+
   @override
   Widget build(BuildContext context) {
     var timeProvider = Provider.of<TimeProvider>(context);
-
-    var listchnae = [
-      Changestate(
-        isselct: timeProvider.switchValue1,
-        onChanged: (bool value) {
-          timeProvider.switchValue1 = value;
-        },
-      ),
-      Changestate(
-        isselct: timeProvider.switchValue2,
-        onChanged: (bool value) {
-          timeProvider.switchValue2 = value;
-        },
-      ),
-      Changestate(
-        isselct: timeProvider.switchValue3,
-        onChanged: (bool value) {
-          timeProvider.switchValue3 = value;
-        },
-      ),
-    ];
-
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: IconButton(
+            onPressed: () {},
+            icon: IconButton(
+                onPressed: () {
+                  edite(context, widget: newMethod());
+
+                  // var c = Go.to(context, AddItemScreen());
+                  // setState(() {});
+                },
+                icon: const Icon(Icons.add))),
+      ),
       appBar: AppBar(
         centerTitle: true,
         elevation: 1,
-        title: Text("All Time"),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: IconButton(
-                  onPressed: () {
-                    var c = Go.to(context, AddItemScreen());
-                    setState(() {});
-                  },
-                  icon: Icon(Icons.add)))
-        ],
+        title: const Text("All Time"),
       ),
       body: ListView.builder(
-        itemCount: listbox.length,
+        itemCount: returnlist(id).length,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              timeProvider.time = listbox[index].time;
+              timeProvider.time = returnlist(id)[index].time;
+              timeProvider.updateTime(returnlist(id)[index].time);
+              print(timeProvider.time);
               edite(context,
-                  box: listbox[index], chnae: listchnae[index], index: index);
+                  widget: boxwidgetedite(
+                    box: returnlist(id)[index],
+                    index: index,
+                  ));
             },
             child: Container(
               child: boxwidget(
-                box: listbox[index],
+                box: returnlist(id)[index],
               ),
             ),
           );
@@ -88,77 +107,109 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
     );
   }
 
-  Future<dynamic> edite(BuildContext context,
-      {required Box box, required Changestate chnae, required int index}) {
-    var timeProvider = Provider.of<TimeProvider>(context, listen: false);
-
-    return showModalBottomSheet(
-      isScrollControlled: true,
-      scrollControlDisabledMaxHeightRatio: 300,
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return boxwidgetedite(
-                box: box,
-                index: index,
-                isselct: chnae.isselct,
-                onChanged: (newValue) {
-                  setState(() {
-                    chnae.onChanged!(newValue);
-                  });
-                },
-              );
-            },
+  newMethod() => Padding(
+        padding: const EdgeInsets.only(top: 30),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Add New Item'),
+            elevation: 1,
           ),
-        );
-      },
-    );
-  }
-
-  Padding boxwidget({
-    required Box box,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 100,
-              child: ListTile(
-                title: Row(
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Consumer<TimeProvider>(
+              builder: (context, timeProvider, _) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(box.title),
-                    SizedBox(width: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField(
+                        controller: titleController,
+                        decoration: InputDecoration(
+                          labelText: 'Title',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField(
+                        controller: detailsController,
+                        decoration: InputDecoration(
+                          labelText: 'Details',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          showPicker(
+                            showSecondSelector: true,
+                            context: context,
+                            value: timeProvider.time,
+                            onChange: (newTime) {
+                              timeProvider.updateTime(newTime);
+                            },
+                            minuteInterval: TimePickerInterval.FIVE,
+                            onChangeDateTime: (dateTime) {
+                              debugPrint("[debug datetime]: $dateTime");
+                            },
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            timeconfig(timeProvider.time),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                          Icon(Icons.edit),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _saveItem(context);
+                          titleController.clear();
+                          detailsController.clear();
+                        },
+                        child: Text('Save'),
+                      ),
+                    ),
                   ],
-                ),
-                leading: Icon(Icons.timer),
-                subtitle: Text(box.details),
-                trailing: Text(
-                  timeconfig(box.time),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                ),
-                // trailing: Switch(value: isselct, onChanged: onChanged),
-              ),
+                );
+              },
             ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 
-  void updateSecondBox(Box box, index) {
+  void updateSecondBox(Box box, index, innexbox) {
     // Update the second item in the list
-    if (listbox.length > 1) {
+    if (true) {
       setState(() {
-        listbox[index] = box;
+        if (innexbox == 1) {
+          listbox1[index] = box;
+        } else {
+          if (innexbox == 2) {
+            listbox2[index] = box;
+          } else {
+            listbox3[index] = box;
+          }
+        }
       });
-
       // Show a Snackbar to confirm the update
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Updated Box 2'),
           duration: Duration(seconds: 2),
         ),
@@ -168,9 +219,7 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
 
   boxwidgetedite({
     required Box box,
-    required bool isselct,
     required int index,
-    required Function(bool)? onChanged,
   }) {
     var titleController = TextEditingController(text: box.title);
     var detailsController = TextEditingController(text: box.details);
@@ -209,21 +258,21 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
                       children: [
                         Text(
                           timeconfig(timeProvider.time),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
                           ),
                         ),
-                        Icon(Icons.edit),
+                        const Icon(Icons.edit),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       controller: titleController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Title',
                         border: OutlineInputBorder(),
                       ),
@@ -233,12 +282,12 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
                       },
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       controller: detailsController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Details',
                         border: OutlineInputBorder(),
                       ),
@@ -248,21 +297,21 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
                       },
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
                         updateSecondBox(
-                          Box(
-                            title: titleController.text,
-                            details: detailsController.text,
-                            time: timeProvider.time,
-                          ),
-                          index,
-                        );
+                            Box(
+                              title: titleController.text,
+                              details: detailsController.text,
+                              time: timeProvider.time,
+                            ),
+                            index,
+                            id);
                         Navigator.of(context).pop(); // Close the bottom sheet
                       },
-                      child: Text('Save'),
+                      child: const Text('Save'),
                     ),
                   ),
                 ],

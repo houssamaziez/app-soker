@@ -30,7 +30,11 @@ class _ScreenBoxState extends State<ScreenBox> {
         children: [
           InkWell(
             onTap: () {
-              Go.to(context, ScreenListTime());
+              Go.to(
+                  context,
+                  ScreenListTime(
+                    id: 1,
+                  ));
             },
             child: boxwidget(
                 color: Color.fromARGB(255, 194, 220, 240),
@@ -47,7 +51,11 @@ class _ScreenBoxState extends State<ScreenBox> {
           ),
           InkWell(
             onTap: () {
-              Go.to(context, ScreenListTime());
+              Go.to(
+                  context,
+                  ScreenListTime(
+                    id: 2,
+                  ));
             },
             child: boxwidget(
                 color: Color.fromARGB(255, 192, 247, 211),
@@ -64,7 +72,11 @@ class _ScreenBoxState extends State<ScreenBox> {
           ),
           InkWell(
             onTap: () {
-              Go.to(context, ScreenListTime());
+              Go.to(
+                  context,
+                  ScreenListTime(
+                    id: 3,
+                  ));
             },
             child: boxwidget(
                 color: Color.fromARGB(255, 247, 243, 180),

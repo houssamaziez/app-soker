@@ -6,6 +6,9 @@ import '../../../Controller/myappcontroller.dart';
 import '../../../Model/box.dart';
 
 class AddItemScreen extends StatefulWidget {
+  final int id;
+
+  const AddItemScreen({super.key, required this.id});
   @override
   _AddItemScreenState createState() => _AddItemScreenState();
 }
@@ -21,10 +24,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
       details: detailsController.text,
       time: timeProvider.time,
     );
-
-    // Add the new item to your list (this function needs to be implemented)
-    // addItem(newItem);
-    listbox.add(newItem);
+    if (widget.id == 1) {
+      listbox1.add(newItem);
+    } else {
+      if (widget.id == 2) {
+        listbox2.add(newItem);
+      } else {
+        listbox2.add(newItem);
+      }
+    }
     setState(() {});
     Navigator.of(context).pop(); // Close the screen
   }
