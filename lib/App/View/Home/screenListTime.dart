@@ -88,7 +88,7 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
           return InkWell(
             onTap: () {
               timeProvider.time = returnlist(id)[index].time;
-              timeProvider.updateTime(returnlist(id)[index].time);
+
               print(timeProvider.time);
               edite(context,
                   widget: boxwidgetedite(
@@ -227,6 +227,11 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
     return Padding(
       padding: const EdgeInsets.only(top: 30),
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          print(box.time);
+          Provider.of<TimeProvider>(context, listen: false)
+              .updateTime(box.time);
+        }),
         appBar: AppBar(
           elevation: 1,
         ),
