@@ -34,9 +34,9 @@ class TimeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  changetime(time) {}
   void updateTime(Time newTime) {
     _time = newTime;
+    time = newTime;
     notifyListeners();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:day_night_time_picker/lib/constants.dart';
@@ -16,11 +17,8 @@ class ScreenListTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => TimeProvider(),
-      child: _ScreenListTimeStateful(
-        id: id,
-      ),
+    return _ScreenListTimeStateful(
+      id: id,
     );
   }
 }
@@ -62,7 +60,6 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
 
   @override
   Widget build(BuildContext context) {
-    var timeProvider = Provider.of<TimeProvider>(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
@@ -85,23 +82,24 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
       body: ListView.builder(
         itemCount: returnlist(id).length,
         itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              timeProvider.time = returnlist(id)[index].time;
-
-              print(timeProvider.time);
-              edite(context,
-                  widget: boxwidgetedite(
-                    box: returnlist(id)[index],
-                    index: index,
-                  ));
-            },
-            child: Container(
-              child: boxwidget(
-                box: returnlist(id)[index],
+          return Consumer<TimeProvider>(builder: (context, timeProvidesr, _) {
+            return InkWell(
+              onTap: () {
+                Provider.of<TimeProvider>(context, listen: false)
+                    .updateTime(returnlist(id)[index].time);
+                edite(context,
+                    widget: boxwidgetedite(
+                      box: returnlist(id)[index],
+                      index: index,
+                    ));
+              },
+              child: Container(
+                child: boxwidget(
+                  box: returnlist(id)[index],
+                ),
               ),
-            ),
-          );
+            );
+          });
         },
       ),
     );
@@ -227,10 +225,12 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
     return Padding(
       padding: const EdgeInsets.only(top: 30),
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: () {
-          print(box.time);
-          Provider.of<TimeProvider>(context, listen: false)
-              .updateTime(box.time);
+        floatingActionButton:
+            Consumer<TimeProvider>(builder: (context, timeProvider, _) {
+          return FloatingActionButton(onPressed: () {
+            print(box.time);
+            timeProvider.updateTime(box.time);
+          });
         }),
         appBar: AppBar(
           elevation: 1,
@@ -243,6 +243,8 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
                 children: [
                   InkWell(
                     onTap: () {
+                      timeProvider.updateTime(box.time);
+
                       Navigator.of(context).push(
                         showPicker(
                           showSecondSelector: true,
@@ -258,17 +260,30 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
                         ),
                       );
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Column(
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              // timeconfig(timeProvider.time),
+                              'Click to change the time',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            const Icon(Icons.edit),
+                          ],
+                        ),
                         Text(
+                          // timeconfig(timeProvider.time),
                           timeconfig(timeProvider.time),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
                           ),
                         ),
-                        const Icon(Icons.edit),
                       ],
                     ),
                   ),
@@ -328,3 +343,5 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
     );
   }
 }
+
+Time? timeitem;
