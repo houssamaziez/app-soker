@@ -1,5 +1,6 @@
 import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:flutter/material.dart';
+import 'package:tomlogin/App/Service/Text%20Service/detectlang.dart';
 import 'package:tomlogin/App/View/Home/screenListTime.dart';
 import 'package:tomlogin/App/util/Route/go.dart';
 import 'package:tomlogin/App/util/Time/temtext.dart';

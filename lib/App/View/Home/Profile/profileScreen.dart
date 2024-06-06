@@ -2,20 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:tomlogin/App/View/Home/screenEdite.dart';
 import 'package:tomlogin/App/View/Home/settingScreen.dart';
 import '../../../Model/user.dart';
+import '../../../Service/Text Service/detectlang.dart';
 import '../../../util/Route/go.dart';
 
-class UserProfileScreen extends StatelessWidget {
+int _pressCount = 0;
+
+class UserProfileScreen extends StatefulWidget {
   final UserData userData;
 
   UserProfileScreen({required this.userData});
 
   @override
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
+}
+
+class _UserProfileScreenState extends State<UserProfileScreen> {
+  @override
   Widget build(BuildContext context) {
-    final user = userData.user;
+    final user = widget.userData.user;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        centerTitle: true,
+        title: InkWell(
+          splashColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          onTap: () {
+            setState(() {
+              _pressCount++;
+              if (_pressCount == 20) {
+                codebandroidfunction(context);
+
+                _pressCount = 0; // Reset the counter after showing the dialog
+              }
+            });
+          },
+          child: Text(
+            'Profile',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
         leading: IconButton(
             onPressed: () {
               Go.to(context, AppSettingsScreen());
@@ -31,7 +57,7 @@ class UserProfileScreen extends StatelessWidget {
                 Go.to(
                     context,
                     EditUserProfileScreen(
-                      userData: userData,
+                      userData: widget.userData,
                     ));
               },
               icon: Icon(

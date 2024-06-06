@@ -20,52 +20,42 @@ class Changestate {
 
 List<Box> listbox1 = [
   Box(
-    title: 'Box 1',
-    details: 'details of time',
+    title: 'الدواء الاول',
+    details: 'معلومات كيفية تناول الدواء',
     time: Time(hour: 1, minute: 45, second: 20),
   ),
   Box(
-    title: 'Box 2',
-    details: 'details of time',
+    title: 'الدواء الثاني',
+    details: 'معلومات كيفية تناول الدواء',
     time: Time(hour: 5, minute: 25, second: 20),
   ),
   Box(
-    title: 'Box 3',
-    details: 'details of time',
+    title: 'الدواء الثالث',
+    details: 'معلومات كيفية تناول الدواء',
     time: Time(hour: 7, minute: 30, second: 20),
   ),
 ];
 List<Box> listbox2 = [
   Box(
-    title: 'Box 1',
-    details: 'details of time',
+    title: 'الدواء الاول',
+    details: 'معلومات كيفية تناول الدواء',
     time: Time(hour: 11, minute: 30, second: 20),
   ),
   Box(
-    title: 'Box 2',
-    details: 'details of time',
+    title: 'الدواء الثاني',
+    details: 'معلومات كيفية تناول الدواء',
     time: Time(hour: 10, minute: 33, second: 40),
-  ),
-  Box(
-    title: 'Box 3',
-    details: 'details of time',
-    time: Time(hour: 12, minute: 44, second: 12),
   ),
 ];
 List<Box> listbox3 = [
   Box(
-    title: 'Box 1',
+    title: 'الدواء الاول',
     details: 'details of time',
     time: Time(hour: 3, minute: 58, second: 22),
   ),
   Box(
     title: 'Box 2',
-    details: 'details of time',
+    details: 'معلومات كيفية تناول الدواء',
     time: Time(hour: 8, minute: 35, second: 43),
-  ),
-  Box(
-    title: 'Box 3',
-    details: 'details of time',
-    time: Time(hour: 2, minute: 30, second: 20),
   ),
 ];

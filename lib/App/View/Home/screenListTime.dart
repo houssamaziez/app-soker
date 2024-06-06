@@ -44,10 +44,10 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
       details: detailsController.text,
       time: timeProvider.time,
     );
-    if (listbox1 == 1) {
+    if (id == 1) {
       listbox1.add(newItem);
     } else {
-      if (listbox1 == 2) {
+      if (id == 2) {
         listbox2.add(newItem);
       } else {
         listbox3.add(newItem);
@@ -67,7 +67,7 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
             onPressed: () {},
             icon: IconButton(
                 onPressed: () {
-                  edite(context, widget: newMethod());
+                  edite(context, widget: addTime());
 
                   // var c = Go.to(context, AddItemScreen());
                   // setState(() {});
@@ -105,7 +105,7 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
     );
   }
 
-  newMethod() => Padding(
+  addTime() => Padding(
         padding: const EdgeInsets.only(top: 30),
         child: Scaffold(
           appBar: AppBar(
@@ -225,15 +225,23 @@ class _ScreenListTimeState extends State<_ScreenListTimeStateful> {
     return Padding(
       padding: const EdgeInsets.only(top: 30),
       child: Scaffold(
-        floatingActionButton:
-            Consumer<TimeProvider>(builder: (context, timeProvider, _) {
-          return FloatingActionButton(onPressed: () {
-            print(box.time);
-            timeProvider.updateTime(box.time);
-          });
-        }),
         appBar: AppBar(
           elevation: 1,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  returnlist(id).remove(returnlist(id)[index]);
+                  setState(() {});
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                )),
+            SizedBox(
+              width: 6,
+            )
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
